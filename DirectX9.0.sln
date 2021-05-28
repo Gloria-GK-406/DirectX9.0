@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX9.0", "DirectX9.0\DirectX9.0.vcxproj", "{465FEEFE-6204-4F95-A1EA-17F8E07B310C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1EAD84EC-17DB-4FF3-AD8D-48AA0BF90DD2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX9.0Test", "Test\DirectX9.0Test\DirectX9.0Test.vcxproj", "{92124EAE-0EEB-49A2-B261-C109F46BF442}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCDisplayTest", "MFCDisplayTest\MFCDisplayTest.vcxproj", "{9DE46D25-9030-4D3D-9DED-079B3E0C565B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,9 +27,29 @@ Global
 		{465FEEFE-6204-4F95-A1EA-17F8E07B310C}.Release|x64.Build.0 = Release|x64
 		{465FEEFE-6204-4F95-A1EA-17F8E07B310C}.Release|x86.ActiveCfg = Release|Win32
 		{465FEEFE-6204-4F95-A1EA-17F8E07B310C}.Release|x86.Build.0 = Release|Win32
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Debug|x64.ActiveCfg = Debug|x64
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Debug|x64.Build.0 = Debug|x64
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Debug|x86.ActiveCfg = Debug|Win32
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Debug|x86.Build.0 = Debug|Win32
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Release|x64.ActiveCfg = Release|x64
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Release|x64.Build.0 = Release|x64
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Release|x86.ActiveCfg = Release|Win32
+		{92124EAE-0EEB-49A2-B261-C109F46BF442}.Release|x86.Build.0 = Release|Win32
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Debug|x64.ActiveCfg = Debug|x64
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Debug|x64.Build.0 = Debug|x64
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Debug|x86.ActiveCfg = Debug|Win32
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Debug|x86.Build.0 = Debug|Win32
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Release|x64.ActiveCfg = Release|x64
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Release|x64.Build.0 = Release|x64
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Release|x86.ActiveCfg = Release|Win32
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92124EAE-0EEB-49A2-B261-C109F46BF442} = {1EAD84EC-17DB-4FF3-AD8D-48AA0BF90DD2}
+		{9DE46D25-9030-4D3D-9DED-079B3E0C565B} = {1EAD84EC-17DB-4FF3-AD8D-48AA0BF90DD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB13E622-5760-416A-ABE0-43710325B6F2}
