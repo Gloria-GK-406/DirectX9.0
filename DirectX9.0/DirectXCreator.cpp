@@ -1,6 +1,7 @@
 #include "DirectXCreator.h"
 #include <d3dx9.h>
 #include <d3d9.h>
+#include <dxerr9.h>
 
 
 
@@ -16,6 +17,11 @@ bool DXWapper::CreateDevice(HWND hwnd)
         D3DDEVTYPE_HAL,         //硬件方式使用D3D9
         &caps                   //获取设备Caps
     );
+
+    D3DDISPLAYMODE d3ddm;
+    _d3d9->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&d3ddm);
+
+    UINT adepterCount =  _d3d9->GetAdapterCount();
 
     DWORD VertextType = GetVertexProcessType(caps);
 
@@ -53,17 +59,18 @@ _D3DPRESENT_PARAMETERS_ DXWapper::InitD3DParameter(HWND hwnd)
 
     d3dpp.BackBufferWidth = width;                                  //后台缓存表面宽度
     d3dpp.BackBufferHeight = height;                                //高度
-    d3dpp.BackBufferFormat = D3DFMT_A32B32G32R32F;                       //设备使用的色彩格式
+    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;                       //设备使用的色彩格式
     d3dpp.BackBufferCount = 1;                                      //后台缓存数量
     d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;                    //多重采样类型,用来去锯齿的
     d3dpp.MultiSampleQuality = 0;                                   //多重采样质量
     d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;                       //刷新方式,DISCARD为系统自动选择,具体看笔记
-    d3dpp.hDeviceWindow = hwnd;                                     //目标窗口句柄
-    d3dpp.Windowed = false;                                         //是否为窗口化
-    d3dpp.EnableAutoDepthStencil = D3DFMT_D24S8;                    //缓冲设置
-    d3dpp.Flags = 0;                                                //不知
-    d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;     //刷新率,默认
+    d3dpp.hDeviceWindow = ::GetAncestor(hwnd, GA_ROOT);;                                     //目标窗口句柄
+    d3dpp.Windowed = FALSE;                                         //是否为窗口化
+    d3dpp.EnableAutoDepthStencil = D3DFMT_D24X8;                    //缓冲设置
+    d3dpp.Flags = D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL;                                                //不知
+    d3dpp.FullScreen_RefreshRateInHz = 60;     //刷新率,默认
     d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;     //看起来像是垂直同步
+    d3dpp.EnableAutoDepthStencil = TRUE;
 
     return d3dpp;
 }
@@ -75,7 +82,7 @@ HRESULT DXWapper::CreateDevice(IDirect3D9* _d3d9, HWND hwnd, _D3DPRESENT_PARAMET
         D3DADAPTER_DEFAULT,             //希望使用的显卡是哪个
         D3DDEVTYPE_HAL,                 //CPU模拟还是GPU模式,HAL是GPU模式
         hwnd,                           //目标窗口,和D3dprameter的保持一致
-        VertextType,                    //向量处理模式,GPU处理还是CPU处理
+        D3DCREATE_FPU_PRESERVE | D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,                    //向量处理模式,GPU处理还是CPU处理
         &d3dpp,
         &m_pDevice
     );
