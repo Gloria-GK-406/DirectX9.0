@@ -23,6 +23,10 @@ public:
 
 private:
 	D3DDrawCwnd m_D3DDrawCwnd;
+	
+
+private:
+	BOOL InitD3DDrawWnd();
 
 
 // 实现

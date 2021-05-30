@@ -7,6 +7,7 @@
 #include "MFCDisplayTest.h"
 #include "MFCDisplayTestDlg.h"
 #include "afxdialogex.h"
+#include "DirectXCreator.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,7 +15,6 @@
 
 
 // CMFCDisplayTestDlg 对话框
-
 
 
 CMFCDisplayTestDlg::CMFCDisplayTestDlg(CWnd* pParent /*=nullptr*/)
@@ -26,6 +26,20 @@ CMFCDisplayTestDlg::CMFCDisplayTestDlg(CWnd* pParent /*=nullptr*/)
 void CMFCDisplayTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+}
+
+BOOL CMFCDisplayTestDlg::InitD3DDrawWnd()
+{
+	CRect rcClient;
+	GetClientRect(&rcClient);
+	rcClient.bottom -= 30;
+	if (!m_D3DDrawCwnd.Create(NULL, TEXT(""), WS_VISIBLE | WS_CHILD, rcClient, this, 10086))
+		return FALSE;
+
+	if (!m_D3DDrawCwnd.InitDirectX())
+		return FALSE;
+
+	return TRUE;
 }
 
 BEGIN_MESSAGE_MAP(CMFCDisplayTestDlg, CDialog)
@@ -44,9 +58,8 @@ BOOL CMFCDisplayTestDlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
-	CWnd wnd;
-	wnd.Create(TEXT(""), TEXT(""), WS_VISIBLE, CRect(0, 0, 50, 50), this, 10087);
-	if (m_D3DDrawCwnd.CreateEx(0,TEXT(""),TEXT( ""), WS_VISIBLE, CRect(0,0,50,50), this, 10086))
+
+	if (!InitD3DDrawWnd())
 		return FALSE;
 
 	// TODO: 在此添加额外的初始化代码

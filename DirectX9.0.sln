@@ -10,6 +10,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX9.0Test", "Test\DirectX9.0Test\DirectX9.0Test.vcxproj", "{92124EAE-0EEB-49A2-B261-C109F46BF442}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCDisplayTest", "MFCDisplayTest\MFCDisplayTest.vcxproj", "{9DE46D25-9030-4D3D-9DED-079B3E0C565B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{465FEEFE-6204-4F95-A1EA-17F8E07B310C} = {465FEEFE-6204-4F95-A1EA-17F8E07B310C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
