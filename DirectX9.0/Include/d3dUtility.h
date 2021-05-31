@@ -13,17 +13,18 @@
 #ifndef __d3dUtilityH__
 #define __d3dUtilityH__
 
-#include <d3dx9.h>
+#include "d3dx9.h"
 #include <string>
 
 namespace d3d
 {
-	bool InitD3D(
+	HWND InitD3D(
 		HINSTANCE hInstance,       // [in] Application instance.
 		int width, int height,     // [in] Backbuffer dimensions.
 		bool windowed,             // [in] Windowed (true)or full screen (false).
 		D3DDEVTYPE deviceType,     // [in] HAL or REF
-		IDirect3DDevice9** device);// [out]The created device.
+		IDirect3DDevice9** device,
+		HWND parent);// [out]The created device.
 
 	int EnterMsgLoop(
 		bool (*ptr_display)(float timeDelta));

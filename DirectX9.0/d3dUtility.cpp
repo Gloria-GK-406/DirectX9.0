@@ -11,14 +11,17 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "d3dUtility.h"
+#include <winnt.h>
 
-bool d3d::InitD3D(
+HWND d3d::InitD3D(
 	HINSTANCE hInstance,
 	int width, int height,
 	bool windowed,
 	D3DDEVTYPE deviceType,
-	IDirect3DDevice9** device)
+	IDirect3DDevice9** device,
+	HWND parent)
 {
+
 	//
 	// Create the main application window.
 	//
@@ -34,16 +37,16 @@ bool d3d::InitD3D(
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = 0;
-	wc.lpszClassName = TEXT("Direct3D9App");
+	wc.lpszClassName = TEXT("Direct3D9App1");
 
 	if (!RegisterClass(&wc))
 	{
 		::MessageBox(0, TEXT("RegisterClass() - FAILED"), 0, 0);
-		return false;
+		return 0;
 	}
 
 	HWND hwnd = 0;
-	hwnd = ::CreateWindow(TEXT("Direct3D9App"), TEXT("Direct3D9App"),
+	hwnd = ::CreateWindow(wc.lpszClassName, wc.lpszClassName,
 		WS_EX_TOPMOST,
 		0, 0, width, height,
 		0 /*parent hwnd*/, 0 /* menu */, hInstance, 0 /*extra*/);
@@ -51,7 +54,7 @@ bool d3d::InitD3D(
 	if (!hwnd)
 	{
 		::MessageBox(0, TEXT("CreateWindow() - FAILED"), 0, 0);
-		return false;
+		return 0;
 	}
 
 	::ShowWindow(hwnd, SW_SHOW);
@@ -71,7 +74,7 @@ bool d3d::InitD3D(
 	if (!d3d9)
 	{
 		::MessageBox(0, TEXT("Direct3DCreate9() - FAILED"), 0, 0);
-		return false;
+		return 0;
 	}
 
 	// Step 2: Check for hardware vp.
@@ -130,13 +133,13 @@ bool d3d::InitD3D(
 		{
 			d3d9->Release(); // done with d3d9 object
 			::MessageBox(0, TEXT("CreateDevice() - FAILED"), 0, 0);
-			return false;
+			return 0;
 		}
 	}
 
 	d3d9->Release(); // done with d3d9 object
 
-	return true;
+	return hwnd;
 }
 
 int d3d::EnterMsgLoop(bool (*ptr_display)(float timeDelta))
@@ -164,6 +167,28 @@ int d3d::EnterMsgLoop(bool (*ptr_display)(float timeDelta))
 		}
 	}
 	return msg.wParam;
+}
+
+LRESULT d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+		//防止拖曳和拉伸时不进行绘制
+	case WM_PAINT:
+		//Display();
+		break;
+
+	case WM_DESTROY:
+		::PostQuitMessage(0);
+		break;
+
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE)
+			::DestroyWindow(hwnd);
+
+		break;
+	}
+	return ::DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 D3DLIGHT9 d3d::InitDirectionalLight(D3DXVECTOR3* direction, D3DXCOLOR* color)

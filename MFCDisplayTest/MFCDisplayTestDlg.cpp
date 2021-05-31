@@ -8,6 +8,7 @@
 #include "MFCDisplayTestDlg.h"
 #include "afxdialogex.h"
 #include "DirectXCreator.h"
+#include "d3dUtility.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -32,11 +33,14 @@ BOOL CMFCDisplayTestDlg::InitD3DDrawWnd()
 {
 	CRect rcClient;
 	GetClientRect(&rcClient);
-	rcClient.bottom -= 30;
-	if (!m_D3DDrawCwnd.Create(NULL, TEXT(""), WS_VISIBLE | WS_CHILD, rcClient, this, 10086))
-		return FALSE;
+	rcClient.bottom -= 50;
+	CreateDeviceStruct deviceStruct;
+	deviceStruct.hInstance = AfxGetInstanceHandle();
+	deviceStruct.hwndParent = m_hWnd;
+	deviceStruct.WindowsHeight = rcClient.Height();
+	deviceStruct.WindowsWidth = rcClient.Width();
 
-	if (!m_D3DDrawCwnd.InitDirectX())
+	if (!m_D3DDrawCwnd.InitDirectX(deviceStruct))
 		return FALSE;
 
 	return TRUE;
@@ -45,6 +49,7 @@ BOOL CMFCDisplayTestDlg::InitD3DDrawWnd()
 BEGIN_MESSAGE_MAP(CMFCDisplayTestDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDOK, &CMFCDisplayTestDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -61,8 +66,6 @@ BOOL CMFCDisplayTestDlg::OnInitDialog()
 
 	if (!InitD3DDrawWnd())
 		return FALSE;
-
-
 	// TODO: 在此添加额外的初始化代码
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -104,3 +107,9 @@ HCURSOR CMFCDisplayTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCDisplayTestDlg::OnBnClickedOk()
+{
+	CDialog::OnOK();
+}
