@@ -41,6 +41,23 @@ bool DXWapper::CreateDevice(CreateDeviceStruct paramter)
     return true;
 }
 
+bool DXWapper::DrawShape()
+{
+    IDirect3DVertexBuffer9* vb;
+    m_pDevice->CreateVertexBuffer(
+        8 * sizeof(Vertex),
+        0,
+        D3DFVF_XYZ,
+        D3DPOOL_DEFAULT,
+        &vb,
+        0
+    );
+
+    
+
+    return false;
+}
+
 DWORD DXWapper::GetVertexProcessType(D3DCAPS9 caps)
 {
     if (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
@@ -63,8 +80,8 @@ _D3DPRESENT_PARAMETERS_ DXWapper::InitD3DParameter(CreateDeviceStruct paramter)
     d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;                       //刷新方式,DISCARD为系统自动选择,具体看笔记
     d3dpp.hDeviceWindow = m_pVideoHwnd;                                     //目标窗口句柄
     d3dpp.Windowed = TRUE;                                         //是否为窗口化
-    d3dpp.EnableAutoDepthStencil = TRUE;                             //缓冲设置
-    d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
+    d3dpp.EnableAutoDepthStencil = TRUE;                             
+    d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;                    //缓冲设置
     d3dpp.Flags = 0;                                                //不知
     d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;     //刷新率,默认
     d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;     //看起来像是垂直同步

@@ -1,6 +1,24 @@
 #pragma once
 #include <d3d9.h>
 
+struct Vertex
+{
+    float _x, _y, _z;
+};
+
+struct ColorVertex
+{
+    float _x, _y, _z;
+    DWORD _color;
+};
+
+struct NormalTexVertex
+{
+    float _x, _y, _z;
+    float _nx, _ny, _nz;
+    float _u, _v;
+};
+
 struct CreateDeviceStruct
 {
     HWND hwndParent;
@@ -14,7 +32,7 @@ class DXWapper
 {
 public:
     bool CreateDevice(CreateDeviceStruct paramter);
-
+    bool DrawShape();
 
 private:
     IDirect3DDevice9* m_pDevice = NULL;
