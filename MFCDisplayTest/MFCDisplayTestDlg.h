@@ -23,10 +23,12 @@ public:
 
 private:
 	D3DDrawCwnd m_D3DDrawCwnd;
+	CComboBox m_box;
 	
 
 private:
 	BOOL InitD3DDrawWnd();
+	void InitComboBox();
 
 
 // 实现
@@ -39,5 +41,5 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedOk();
+	afx_msg void OnCbnSelchangeCombo1();
 };

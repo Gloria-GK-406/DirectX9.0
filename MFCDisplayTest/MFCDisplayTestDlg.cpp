@@ -27,6 +27,7 @@ CMFCDisplayTestDlg::CMFCDisplayTestDlg(CWnd* pParent /*=nullptr*/)
 void CMFCDisplayTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO1, m_box);
 }
 
 BOOL CMFCDisplayTestDlg::InitD3DDrawWnd()
@@ -42,16 +43,26 @@ BOOL CMFCDisplayTestDlg::InitD3DDrawWnd()
 
 	if (!m_D3DDrawCwnd.InitDirectX(deviceStruct))
 		return FALSE;
+	InitComboBox();
+	m_D3DDrawCwnd.PrepareData();
 
 	return TRUE;
+}
+
+void CMFCDisplayTestDlg::InitComboBox()
+{
+	m_box.AddString(L"Triangle");
+	m_box.AddString(L"Cube");
+	m_box.AddString(L"Custom");
+	m_box.AddString(L"ColoredTriangle");
+	m_box.AddString(L"Texture");
 }
 
 BEGIN_MESSAGE_MAP(CMFCDisplayTestDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDOK, &CMFCDisplayTestDlg::OnBnClickedOk)
+	ON_CBN_SELCHANGE(IDC_COMBO1, &CMFCDisplayTestDlg::OnCbnSelchangeCombo1)
 END_MESSAGE_MAP()
-
 
 // CMFCDisplayTestDlg 消息处理程序
 
@@ -107,9 +118,9 @@ HCURSOR CMFCDisplayTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-
-void CMFCDisplayTestDlg::OnBnClickedOk()
+void CMFCDisplayTestDlg::OnCbnSelchangeCombo1()
 {
-	CDialog::OnOK();
+	int sel =  m_box.GetCurSel();
+	DRAWTYPE type = (DRAWTYPE)(sel);
+	m_D3DDrawCwnd.SetDrawType(type);
 }
